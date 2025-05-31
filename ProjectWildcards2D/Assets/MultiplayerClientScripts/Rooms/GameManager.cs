@@ -10,6 +10,20 @@ namespace SavageCrown
 {
     public class GameManager : MonoBehaviourPunCallbacks
     {
+
+        #region Private Fields
+
+        private int currentPlayerTurn = 0; // Depends on how game should be started
+
+        #endregion
+
+        #region Public Fields
+
+        public static GameManager Instance;
+
+        #endregion
+
+
         #region Photon Callbacks
 
         ///<summary>
@@ -27,6 +41,11 @@ namespace SavageCrown
         public void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
+        }
+
+        public bool IsPlayerTurn(int actorNumber)
+        {
+            return PhotonNetwork.LocalPlayer.ActorNumber == currentPlayerTurn;
         }
 
         #endregion
@@ -73,5 +92,23 @@ namespace SavageCrown
         }
 
         #endregion
+
+        #region MonoBehaviour Callbacks
+
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
+        }
+
+        #endregion
+
     }
 }
