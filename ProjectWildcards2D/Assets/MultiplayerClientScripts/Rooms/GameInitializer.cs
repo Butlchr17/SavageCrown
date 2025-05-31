@@ -16,6 +16,8 @@ public class GameInitializer : MonoBehaviour
 
     #endregion
 
+    #region MonoBehaviour Callbacks
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -36,5 +38,7 @@ public class GameInitializer : MonoBehaviour
         }
 
     }
+
+    #endregion
 
 }
