@@ -45,7 +45,7 @@ namespace SavageCrown
 
         public bool IsPlayerTurn(int actorNumber)
         {
-            return PhotonNetwork.LocalPlayer.ActorNumber == currentPlayerTurn;
+            return actorNumber == currentPlayerTurn;
         }
 
         #endregion
@@ -106,6 +106,11 @@ namespace SavageCrown
                 Destroy(gameObject);
             }
 
+        }
+
+        void Start()
+        {
+            Instance = this;
         }
 
         #endregion
