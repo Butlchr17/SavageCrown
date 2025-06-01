@@ -7,14 +7,15 @@ public class TileManager : MonoBehaviour
 {
     #region Public Fields
 
-    [SerializeField]
-    public List<GameObject> tilePrefabs; // Assign in inspector
+    public TileDatabase tileDatabase;
+
+    public int RemainingTileCount => tileBag?.Count ?? 0;
 
     #endregion
 
     #region Private Fields
 
-    private Queue<GameObject> tileBag;
+    private Queue<Tile> tileBag;
 
     #endregion
 
@@ -22,24 +23,43 @@ public class TileManager : MonoBehaviour
     #region MonoBehaviour Callbacks
     void Start()
     {
-        ShuffleTiles();
+        InitializeBag();
     }
 
-
-    void ShuffleTiles()
+    void InitializeBag()
     {
-        List<GameObject> shuffled = new List<GameObject>(tilePrefabs);
+        if (tileDatabase == null || tileDatabase.allTiles == null || tileDatabase.allTiles.Count == 0)
+        {
+            Debug.LogWarning("TileManager: TileDatabase or its content is null/empty.");
+            return;
+        }
+
+        List<Tile> shuffled = new List<Tile>(tileDatabase.allTiles);
         shuffled = shuffled.OrderBy(x => Random.value).ToList();
-        tileBag = new Queue<GameObject>(shuffled);
+
+        tileBag = new Queue<Tile>(shuffled);
+    }
+
+     private void ShuffleTiles()
+    {
+        if (tileBag == null || tileBag.Count == 0)
+        {
+            Debug.LogWarning("TileManager: Cannot shuffle an empty tile bag.");
+            return;
+        }
+
+        List<Tile> remainingTiles = tileBag.ToList();
+        remainingTiles = remainingTiles.OrderBy(x => Random.value).ToList();
+        tileBag = new Queue<Tile>(remainingTiles);
     }
 
     #endregion
 
     #region  Public Methods
 
-    public GameObject DrawTile()
+    public Tile DrawTile()
     {
-        if (tileBag.Count == 0)
+        if (tileBag == null || tileBag.Count == 0)
         {
             Debug.LogWarning("TileManager: Tile Bag is empty!");
             return null;
@@ -47,6 +67,12 @@ public class TileManager : MonoBehaviour
 
         return tileBag.Dequeue();
     }
+
+    public void ShuffleRemainingTiles()
+    {
+        ShuffleTiles();
+    }
+
 
     #endregion
 }

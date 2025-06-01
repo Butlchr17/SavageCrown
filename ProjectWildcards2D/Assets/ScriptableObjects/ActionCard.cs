@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewRuleCard", menuName = "SavageCrown/Rule Card")]
-public class RuleCard : ScriptableObject
+[CreateAssetMenu(fileName = "NewActionCard", menuName = "SavageCrown/Action Card")]
+public class ActionCard : ScriptableObject
 {
 
     #region Public Fields
 
-    public string ruleName;
-    public string ruleDescription;
+    public string actionName;
+    public string actionDescription;
     public Sprite icon;
 
     #endregion
@@ -18,7 +18,7 @@ public class RuleCard : ScriptableObject
 
     public virtual void Activate(GameObject player)
     {
-        Debug.Log($"{ruleName} activated by {player.name}");
+        Debug.Log($"{actionName} activated by {player.name}");
 
         // add in rule logic here
 
