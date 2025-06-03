@@ -5,6 +5,14 @@ using Photon.Pun;
 
 public class PlayerHand : MonoBehaviourPun
 {
+
+    #region Private Fields
+
+    private Queue<ActionCard> personalDeck;
+
+    #endregion
+
+
     #region Public Fields
 
     public List<Tile> heldTiles = new List<Tile>();
@@ -119,4 +127,14 @@ public class PlayerHand : MonoBehaviourPun
     }
 
     #endregion
+
+    #region Public Methods
+
+    public void shuffleDeck(list<ActionCard> cards)
+    {
+        personalDeck = new Queue<ActionCard>(cards.OrderBy(c => Random.value));
+    }
+
+    #endregion
+
 }

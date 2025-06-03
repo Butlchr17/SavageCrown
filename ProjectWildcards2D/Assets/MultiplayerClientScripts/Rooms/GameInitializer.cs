@@ -16,8 +16,14 @@ public class GameInitializer : MonoBehaviour
 
     #endregion
 
+    #region Public Fields
+
+    public List<ActionCard> sharedDeckTemplate;
+
+    #endregion
+
     #region MonoBehaviour Callbacks
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,6 +43,15 @@ public class GameInitializer : MonoBehaviour
             Debug.Log("Room: Either the boardCanvas or the playerCanvas are not set");
         }
 
+    }
+
+    void InitializePlayerDecks()
+    {
+        foreach (Player player in allPlayers)
+        {
+            List<ActionCard> playerDeck = new List<ActionCard>(sharedDeckTemplate);
+            player.shuffleDeck(playerDeck); // Implement this in player hand
+        }
     }
 
     #endregion
